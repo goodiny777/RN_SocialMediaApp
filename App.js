@@ -1,19 +1,13 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
-
+import { SafeAreaView } from 'react-native';
+import Title from './components/Title/Title';
 const App = () => {
 
   return <SafeAreaView>
-    <Text style={{fontFamily: 'Inter-Black', fontSize: 50}}>HELLO</Text>
-  </SafeAreaView>;
-}
+    <Title title={'Let`s Explore'} />
+  </SafeAreaView >;
+};
 
 
 export default App;
