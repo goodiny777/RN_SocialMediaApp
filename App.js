@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, TouchableOpacity, View, Text, FlatList } from 'react-native';
 import Title from './components/Title/Title';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -56,6 +56,27 @@ const App = () => {
     },
   ];
 
+  const userStroiesPageSize = 4;
+  const [userStroiesCurrentPage, setUserStroiesCurrentPage] = useState(1);
+  const [userStroiesRenderedData, setUserStroiesRenderedData] = useState([]);
+  const [isLoadingUserStories, setIsLoadingUserStories] = useState(false);
+
+  const pagination = (database, currentPage, pageSize) => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    if (startIndex >= database.length) {
+      return [];
+    }
+    return database.slice(startIndex, endIndex);
+  };
+
+  useEffect(() => {
+    setIsLoadingUserStories(true);
+    const getInitialData = pagination(userStories, 1, userStroiesPageSize);
+    setUserStroiesRenderedData(getInitialData);
+    setIsLoadingUserStories(false);
+  }, []);
+
   return <SafeAreaView>
     <View style={globalStyle.header}>
       <Title title={'Let`s Explore'} />
@@ -68,10 +89,21 @@ const App = () => {
     </View>
     <View style={globalStyle.userStoryContainer}>
       <FlatList
+        onEndReachedThreshold={0.5}
+        onEndReached={() => {
+          if (isLoadingUserStories) return;
+          setIsLoadingUserStories(true);
+          const contentToAppend = pagination(userStories, userStroiesCurrentPage + 1, userStroiesPageSize);
+          if (contentToAppend.length > 0) {
+            setUserStroiesRenderedData(prev => [...prev, ...contentToAppend]);
+            setUserStroiesCurrentPage(userStroiesCurrentPage + 1);
+          }
+          setIsLoadingUserStories(false);
+        }}
         showsHorizontalScrollIndicator={false}
         horizontal={true}
-        data={userStories}
-        renderItem={(item) => <UserStory user={item} />} />
+        data={userStroiesRenderedData}
+        renderItem={(item) => <UserStory key={item.id} user={item} />} />
     </View>
   </SafeAreaView >;
 };
