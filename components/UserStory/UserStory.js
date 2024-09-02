@@ -4,14 +4,14 @@ import { Text, View, Image } from 'react-native';
 import style from './style';
 import PropTypes from "prop-types";
 import { title } from 'process';
-import { Image } from 'react-native-svg';
 
 const UserStory = props => {
+    const user = props.user.item;
     return <View style={style.storyContainer}>
         <View style={style.profileImageContainer}>
-            <Image source={props.profileImage} />
+            <Image source={user.profileImage} />
         </View>
-        <Text style={style.userName}>{props.title}</Text>
+        <Text style={style.userName}>{user.firstName}</Text>
     </View>;
 };
 

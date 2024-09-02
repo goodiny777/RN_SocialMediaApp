@@ -12,47 +12,47 @@ const App = () => {
     {
       firstName: 'Joseph',
       id: 0,
-      profileImage: require('./assets/images/default_profile.png');
+      profileImage: require('./assets/images/default_profile.png')
     },
     {
       firstName: 'Angel',
       id: 1,
-      profileImage: require('./assets/images/default_profile.png');
+      profileImage: require('./assets/images/default_profile.png')
     },
     {
       firstName: 'White',
       id: 2,
-      profileImage: require('./assets/images/default_profile.png');
+      profileImage: require('./assets/images/default_profile.png')
     },
     {
       firstName: 'Oliver',
       id: 3,
-      profileImage: require('./assets/images/default_profile.png');
+      profileImage: require('./assets/images/default_profile.png')
     },
     {
       firstName: 'Jhon',
       id: 4,
-      profileImage: require('./assets/images/default_profile.png');
+      profileImage: require('./assets/images/default_profile.png')
     },
     {
       firstName: 'Darek',
       id: 5,
-      profileImage: require('./assets/images/default_profile.png');
+      profileImage: require('./assets/images/default_profile.png')
     },
     {
       firstName: 'Bob',
       id: 6,
-      profileImage: require('./assets/images/default_profile.png');
+      profileImage: require('./assets/images/default_profile.png')
     },
     {
       firstName: 'Toast',
       id: 7,
-      profileImage: require('./assets/images/default_profile.png');
+      profileImage: require('./assets/images/default_profile.png')
     },
     {
       firstName: 'Mick',
       id: 8,
-      profileImage: require('./assets/images/default_profile.png');
+      profileImage: require('./assets/images/default_profile.png')
     },
   ];
 
