@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 
 const style = StyleSheet.create({
-    userPostsContainer: {
+    userPostsFeedContainer: {
         marginTop: 20,
         marginHorizontal: 28
     },

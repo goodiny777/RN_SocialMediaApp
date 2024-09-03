@@ -3,9 +3,6 @@ import { getFontFamily } from "../../helpers/fonts_helper";
 
 const style = StyleSheet.create({
     header: {
-        marginLeft: 27,
-        marginRight: 17,
-        marginTop: 30,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',

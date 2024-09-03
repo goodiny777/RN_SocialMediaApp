@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
-import UserPost from '../UserPost/UserPost';
+import { FlatList, View, TouchableOpacity, Text } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import UserPost from '../UserPost/UserPost.js';
+import globalStyle from '../../assets/styles/globalStyle.js';
 import style from './style';
+import StroiesFeed from '../StoriesFeed/StoriesFeed.js';
+import Title from '../Title/Title.js';
+import pagination from '../../helpers/pagination.js';
 
 const PostsFeed = () => {
     const posts =
@@ -14,7 +20,8 @@ const PostsFeed = () => {
                 likes: 123,
                 comments: 13,
                 bookmarks: 1,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             },
             {
                 id: 1,
@@ -24,7 +31,8 @@ const PostsFeed = () => {
                 likes: 256,
                 comments: 34,
                 bookmarks: 5,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             },
             {
                 id: 2,
@@ -34,7 +42,8 @@ const PostsFeed = () => {
                 likes: 489,
                 comments: 89,
                 bookmarks: 7,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             },
             {
                 id: 3,
@@ -44,7 +53,8 @@ const PostsFeed = () => {
                 likes: 342,
                 comments: 21,
                 bookmarks: 9,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             },
             {
                 id: 4,
@@ -54,7 +64,8 @@ const PostsFeed = () => {
                 likes: 178,
                 comments: 18,
                 bookmarks: 3,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             },
             {
                 id: 5,
@@ -64,7 +75,8 @@ const PostsFeed = () => {
                 likes: 314,
                 comments: 45,
                 bookmarks: 4,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             },
             {
                 id: 6,
@@ -74,7 +86,8 @@ const PostsFeed = () => {
                 likes: 287,
                 comments: 67,
                 bookmarks: 6,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             },
             {
                 id: 7,
@@ -84,7 +97,8 @@ const PostsFeed = () => {
                 likes: 432,
                 comments: 56,
                 bookmarks: 8,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             },
             {
                 id: 8,
@@ -94,7 +108,8 @@ const PostsFeed = () => {
                 likes: 213,
                 comments: 29,
                 bookmarks: 2,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             },
             {
                 id: 9,
@@ -104,48 +119,56 @@ const PostsFeed = () => {
                 likes: 391,
                 comments: 32,
                 bookmarks: 10,
-                profileImage: require('../../assets/images/default_profile.png')
+                profileImage: require('../../assets/images/default_profile.png'),
+                image: require('../../assets/images/default_post.png'),
             }
         ];
 
-    const userPostsPageSize = 4;
+    const userPostsPageSize = 2;
     const [userPostsCurrentPage, setUserPostsCurrentPage] = useState(1);
     const [userPostsRenderedData, setUserPostsRenderedData] = useState([]);
     const [isLoadingUserPosts, setIsLoadingUserPosts] = useState(false);
 
     useEffect(() => {
         setIsLoadingUserPosts(true);
-        const getInitialData = pagination(posts, 1, userStroiesPageSize);
+        const getInitialData = pagination(posts, 1, userPostsPageSize);
         setUserPostsRenderedData(getInitialData);
         setIsLoadingUserPosts(false);
     }, []);
 
-    const pagination = (database, currentPage, pageSize) => {
-        const startIndex = (currentPage - 1) * pageSize;
-        const endIndex = startIndex + pageSize;
-        if (startIndex >= database.length) {
-            return [];
-        }
-        return database.slice(startIndex, endIndex);
-    };
-
-    return <View style={style.userPostsContainer}>
+    return <View style={style.userPostsFeedContainer}>
         <FlatList
+            ListHeaderComponent={
+                <View>
+                    <View style={globalStyle.header}>
+                        <Title title={'Let`s Explore'} />
+                        <TouchableOpacity style={globalStyle.messageIcon}>
+                            <FontAwesomeIcon icon={faEnvelope} size={20} color='#898DAE' />
+                            <View style={globalStyle.messageBadgeContainer}>
+                                <Text style={globalStyle.messageBadge}>2</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <StroiesFeed />
+                </View>
+
+            }
             onEndReachedThreshold={0.5}
             onEndReached={() => {
                 if (isLoadingUserPosts) return;
                 setIsLoadingUserPosts(true);
-                const contentToAppend = pagination(posts, userStroiesCurrentPage + 1, userStroiesPageSize);
+                const contentToAppend = pagination(posts, userPostsCurrentPage + 1, userPostsPageSize);
                 if (contentToAppend.length > 0) {
                     setUserPostsRenderedData(prev => [...prev, ...contentToAppend]);
-                    setUserPostsCurrentPage(userStroiesCurrentPage + 1);
+                    setUserPostsCurrentPage(userPostsCurrentPage + 1);
                 }
                 setIsLoadingUserPosts(false);
             }}
             showsVerticalScrollIndicator={false}
             horizontal={false}
-            data={userStroiesRenderedData}
-            renderItem={(item) => <UserPost key={item.id} user={item} />} />
+            data={userPostsRenderedData}
+            renderItem={(item) =>
+                <UserPost key={item.id} post={item} />} />
     </View>;
 }
 

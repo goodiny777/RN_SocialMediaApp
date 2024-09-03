@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import UserStory from '../UserStory/UserStory';
 import style from './style';
+import pagination from '../../helpers/pagination';
 
 const StroiesFeed = () => {
     const userStories = [
@@ -63,15 +64,6 @@ const StroiesFeed = () => {
         setUserStroiesRenderedData(getInitialData);
         setIsLoadingUserStories(false);
     }, []);
-
-    const pagination = (database, currentPage, pageSize) => {
-        const startIndex = (currentPage - 1) * pageSize;
-        const endIndex = startIndex + pageSize;
-        if (startIndex >= database.length) {
-            return [];
-        }
-        return database.slice(startIndex, endIndex);
-    };
 
     return <View style={style.userStoryContainer}>
         <FlatList
