@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, View, TouchableOpacity, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
-import UserPost from '../UserPost/UserPost.js';
+import UserPost from '../../components/UserPost/UserPost.js';
 import globalStyle from '../../assets/styles/globalStyle.js';
-import style from './style';
-import StroiesFeed from '../StoriesFeed/StoriesFeed.js';
-import Title from '../Title/Title.js';
+import style from './style.js';
+import StroiesFeed from '../../components/StoriesFeed/StoriesFeed.js';
+import Title from '../../components/Title/Title.js';
 import pagination from '../../helpers/pagination.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Routes } from '../../navigation/Routes.js';
 
-const PostsFeed = () => {
+const Home = ({ navigation }) => {
     const posts =
         [
             {
@@ -136,41 +138,43 @@ const PostsFeed = () => {
         setIsLoadingUserPosts(false);
     }, []);
 
-    return <View style={style.userPostsFeedContainer}>
-        <FlatList
-            ListHeaderComponent={
-                <View>
-                    <View style={globalStyle.header}>
-                        <Title title={'Let`s Explore'} />
-                        <TouchableOpacity style={globalStyle.messageIcon}>
-                            <FontAwesomeIcon icon={faEnvelope} size={20} color='#898DAE' />
-                            <View style={globalStyle.messageBadgeContainer}>
-                                <Text style={globalStyle.messageBadge}>2</Text>
-                            </View>
-                        </TouchableOpacity>
+    return <SafeAreaView>
+        <View style={style.userHomeContainer}>
+            <FlatList
+                ListHeaderComponent={
+                    <View>
+                        <View style={globalStyle.header}>
+                            <Title title={'Let`s Explore'} />
+                            <TouchableOpacity style={globalStyle.messageIcon} onPress={() => navigation.navigate(Routes.Profile)}>
+                                <FontAwesomeIcon icon={faEnvelope} size={20} color='#898DAE' />
+                                <View style={globalStyle.messageBadgeContainer}>
+                                    <Text style={globalStyle.messageBadge}>2</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <StroiesFeed />
                     </View>
-                    <StroiesFeed />
-                </View>
 
-            }
-            onEndReachedThreshold={0.5}
-            onEndReached={() => {
-                if (isLoadingUserPosts) return;
-                setIsLoadingUserPosts(true);
-                const contentToAppend = pagination(posts, userPostsCurrentPage + 1, userPostsPageSize);
-                if (contentToAppend.length > 0) {
-                    setUserPostsRenderedData(prev => [...prev, ...contentToAppend]);
-                    setUserPostsCurrentPage(userPostsCurrentPage + 1);
                 }
-                setIsLoadingUserPosts(false);
-            }}
-            showsVerticalScrollIndicator={false}
-            horizontal={false}
-            data={userPostsRenderedData}
-            renderItem={(item) =>
-                <UserPost key={item.id} post={item} />} />
-    </View>;
+                onEndReachedThreshold={0.5}
+                onEndReached={() => {
+                    if (isLoadingUserPosts) return;
+                    setIsLoadingUserPosts(true);
+                    const contentToAppend = pagination(posts, userPostsCurrentPage + 1, userPostsPageSize);
+                    if (contentToAppend.length > 0) {
+                        setUserPostsRenderedData(prev => [...prev, ...contentToAppend]);
+                        setUserPostsCurrentPage(userPostsCurrentPage + 1);
+                    }
+                    setIsLoadingUserPosts(false);
+                }}
+                showsVerticalScrollIndicator={false}
+                horizontal={false}
+                data={userPostsRenderedData}
+                renderItem={(item) =>
+                    <UserPost key={item.id} post={item} />} />
+        </View>
+    </SafeAreaView>;
 }
 
-export default PostsFeed;
+export default Home;
 

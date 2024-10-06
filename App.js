@@ -2,13 +2,15 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 
-import PostsFeed from './components/PostsFeed/PostsFeed';
+import Home from './screens/Home/Home';
+import { NavigationContainer } from '@react-navigation/native';
+import MainNavigator from './navigation/MainNavigator';
 
 const App = () => {
 
-  return <SafeAreaView>
-    <PostsFeed />
-  </SafeAreaView >;
+  return <NavigationContainer>
+    <MainNavigator />
+  </NavigationContainer>;
 };
 
 
