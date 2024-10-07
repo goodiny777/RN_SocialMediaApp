@@ -3,19 +3,31 @@ import { Routes } from "./Routes";
 import Home from "../screens/Home/Home";
 import { Header } from "react-native/Libraries/NewAppScreen";
 import Profile from "../screens/Profile/Profile";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const DrawerNavigator = () => {
+    return (
+        <Drawer.Navigator
+            screenOptions={{ header: () => null, headerShown: false }}
+        >
+            <Stack.Screen name={Routes.Home} component={Home} />
+            <Stack.Screen name={Routes.Profile} component={Profile} />
+        </Drawer.Navigator>
+    )
+};
 
 const MainNavigator = () => {
-    return <Stack.Navigator
+    return (<Stack.Navigator
         screenOptions={{ header: () => null, headerShown: false }}
-        initialRouteName={Routes.Home} >
+        initialRouteName={'Drawer'} >
 
-        <Stack.Screen name={Routes.Home} component={Home} />
-        <Stack.Screen name={Routes.Profile} component={Profile} />
+        <Stack.Screen name={'Drawer'} component={DrawerNavigator} />
 
 
-    </Stack.Navigator >
+    </Stack.Navigator >)
 };
 
 export default MainNavigator;

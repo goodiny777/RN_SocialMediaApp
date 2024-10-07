@@ -145,7 +145,7 @@ const Home = ({ navigation }) => {
                     <View>
                         <View style={globalStyle.header}>
                             <Title title={'Let`s Explore'} />
-                            <TouchableOpacity style={globalStyle.messageIcon} onPress={() => navigation.navigate(Routes.Profile)}>
+                            <TouchableOpacity style={globalStyle.messageIcon}>
                                 <FontAwesomeIcon icon={faEnvelope} size={20} color='#898DAE' />
                                 <View style={globalStyle.messageBadgeContainer}>
                                     <Text style={globalStyle.messageBadge}>2</Text>
