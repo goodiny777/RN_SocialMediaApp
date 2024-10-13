@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'react-native-svg';
 import style from './style';
 import UserProfileImage from '../../components/UserProfileImage/UserProfileImage';
+import { ProfileTabsavigator } from '../../navigation/MainNavigator';
 
 const Profile = () => {
 
@@ -29,6 +30,9 @@ const Profile = () => {
                     <Text style={style.statsAmount}>300</Text>
                     <Text style={style.statsTitle}>Posts</Text>
                 </View>
+            </View>
+            <View style={{ flex: 1 }}>
+                <ProfileTabsavigator />
             </View>
         </ScrollView>
     </SafeAreaView>;
